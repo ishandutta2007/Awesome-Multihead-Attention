@@ -17,15 +17,11 @@ flowchart LR
 ```
 
 
-*   **Standard Multi-Head Attention (Vaswani et al., 2017)**
-    *   *Concept:* The foundation. Allocates an independent set of Key ($K$) and Value ($V$) projection matrices for every single Query ($Q$) head.
-    *   *Limitation:* Creates a massive Key-Value (KV) cache memory bottleneck during inference serving, limiting maximum batch sizes.
-*   **Multi-Query Attention (MQA, Shazeer, 2019)**
-    *   *Concept:* Extreme memory compression. Collapses the Key and Value matrices into a single, shared head, while keeping multiple distinct Query heads.
-    *   *Limitation:* Significantly reduces VRAM overhead, but can cause minor drops in model capacity and accuracy on complex tasks.
-*   **Grouped-Query Attention (GQA, Ainslie et al., 2023)**
-    *   *Concept:* The modern industry standard (e.g., Llama 3). Acts as an adjustable compromise by grouping Query heads into clusters, where each cluster shares a single Key and Value head.
-    *   *Significance:* Delivers nearly the same processing speed as MQA while retaining the high model capacity and accuracy of standard MHA.
+| Variant | Details | First Used | Paper Link |
+| :--- | :--- | :--- | :--- |
+| **Standard Multi-Head Attention (Vaswani et al., 2017)** | *Concept:* The foundation. Allocates an independent set of Key ($K$) and Value ($V$) projection matrices for every single Query ($Q$) head.<br><br>*Limitation:* Creates a massive Key-Value (KV) cache memory bottleneck during inference serving, limiting maximum batch sizes. | 2017 | [https://arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762) |
+| **Multi-Query Attention (MQA, Shazeer, 2019)** | *Concept:* Extreme memory compression. Collapses the Key and Value matrices into a single, shared head, while keeping multiple distinct Query heads.<br><br>*Limitation:* Significantly reduces VRAM overhead, but can cause minor drops in model capacity and accuracy on complex tasks. | 2019 | [https://arxiv.org/abs/1911.02150](https://arxiv.org/abs/1911.02150) |
+| **Grouped-Query Attention (GQA, Ainslie et al., 2023)** | *Concept:* The modern industry standard (e.g., Llama 3). Acts as an adjustable compromise by grouping Query heads into clusters, where each cluster shares a single Key and Value head.<br><br>*Significance:* Delivers nearly the same processing speed as MQA while retaining the high model capacity and accuracy of standard MHA. | 2023 | [https://arxiv.org/abs/2305.13245](https://arxiv.org/abs/2305.13245) |
 
 ---
 
@@ -33,14 +29,11 @@ flowchart LR
 
 These variants modify the attention matrix visibility rules to adapt the multi-head block to different learning objectives and structural layouts.
 
-*   **Bidirectional Attention (Encoder)**
-    *   *Mechanism:* Allows every token to look at and attend to all other tokens in the entire sequence length.
-    *   *Application:* Used in comprehension-heavy models like BERT to gather full contextual awareness.
-*   **Causal Attention (Decoder)**
-    *   *Mechanism:* Uses a lower-triangular mask to force attention heads to ignore future tokens, allowing tokens to only attend to historical indices ($\le i$).
-    *   *Application:* The engine behind autoregressive generative models like GPT and Claude.
-*   **Prefix / Masked Hybrid Attention**
-    *   *Mechanism:* Combines both styles within a single block. It allows bidirectional attention over an initial system prompt or context string, but switches to causal execution for generation tokens.
+| Variant | Details | First Used | Paper Link |
+| :--- | :--- | :--- | :--- |
+| **Bidirectional Attention (Encoder)** | *Mechanism:* Allows every token to look at and attend to all other tokens in the entire sequence length.<br><br>*Application:* Used in comprehension-heavy models like BERT to gather full contextual awareness. | 2018 | [https://arxiv.org/abs/1810.04805](https://arxiv.org/abs/1810.04805) |
+| **Causal Attention (Decoder)** | *Mechanism:* Uses a lower-triangular mask to force attention heads to ignore future tokens, allowing tokens to only attend to historical indices ($\le i$).<br><br>*Application:* The engine behind autoregressive generative models like GPT and Claude. | 2017 | [https://arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762) |
+| **Prefix / Masked Hybrid Attention** | *Mechanism:* Combines both styles within a single block. It allows bidirectional attention over an initial system prompt or context string, but switches to causal execution for generation tokens. | 2019 | [https://arxiv.org/abs/1905.03197](https://arxiv.org/abs/1905.03197) |
 
 ---
 
@@ -48,25 +41,18 @@ These variants modify the attention matrix visibility rules to adapt the multi-h
 
 These variations alter the traditional $O(N^2)$ attention calculation matrix to enable processing for ultra-long context limits.
 
-*   **FlashAttention Kernels**
-    *   *Type:* Hardware-Aware Optimization.
-    *   *Mechanism:* Fuses the multi-head computation steps into fast, on-chip GPU SRAM using tiling methods, dropping the memory footprint from quadratic down to linear ($O(N)$).
-*   **Linear Attention (Performer / Linear Transformer)**
-    *   *Type:* Kernel Trick Approximation.
-    *   *Mechanism:* Approximates the standard Softmax function using kernel maps, altering the calculation order from $(Q \times K^T) \times V$ to $Q \times (K^T \times V)$.
-    *   *Pros:* Drops time and space complexity to true linear scaling ($O(N)$) relative to token length.
-*   **Multi-Head Latent Attention (MLA)**
-    *   *Type:* Low-Rank Compression (DeepSeek-V3).
-    *   *Mechanism:* Compresses the Key-Value cache down into a tiny, low-rank latent vector before attention calculations, up-projecting them dynamically in SRAM during execution.
-    *   *Pros:* Drastically compresses the KV cache memory footprint beyond the limits of standard GQA.
+| Variant | Details | First Used | Paper Link |
+| :--- | :--- | :--- | :--- |
+| **FlashAttention Kernels** | *Type:* Hardware-Aware Optimization.<br><br>*Mechanism:* Fuses the multi-head computation steps into fast, on-chip GPU SRAM using tiling methods, dropping the memory footprint from quadratic down to linear ($O(N)$). | 2022 | [https://arxiv.org/abs/2205.14135](https://arxiv.org/abs/2205.14135) |
+| **Linear Attention (Performer / Linear Transformer)** | *Type:* Kernel Trick Approximation.<br><br>*Mechanism:* Approximates the standard Softmax function using kernel maps, altering the calculation order from $(Q \times K^T) \times V$ to $Q \times (K^T \times V)$.<br><br>*Pros:* Drops time and space complexity to true linear scaling ($O(N)$) relative to token length. | 2020 | [https://arxiv.org/abs/2006.16236](https://arxiv.org/abs/2006.16236) |
+| **Multi-Head Latent Attention (MLA)** | *Type:* Low-Rank Compression (DeepSeek-V3).<br><br>*Mechanism:* Compresses the Key-Value cache down into a tiny, low-rank latent vector before attention calculations, up-projecting them dynamically in SRAM during execution.<br><br>*Pros:* Drastically compresses the KV cache memory footprint beyond the limits of standard GQA. | 2024 | [https://arxiv.org/abs/2405.04434](https://arxiv.org/abs/2405.04434) |
 
 ---
 
 ## 4. Cross-Domain Applications
 
-*   **Autoregressive Text Generation Foundations**
-    *   *Application:* Serves as the core sequence alignment mechanism for modern LLMs, allowing models to maintain long-range tracking across multi-turn user conversations.
-*   **Cross-Modal Vision-Language Alignment**
-    *   *Application:* Drives multi-modal systems by configuring one modality (e.g., Text) to provide the Queries, while a separate visual modality (e.g., Image tokens) serves as the Keys and Values, binding phrases to explicit pixels.
-*   **Spatio-Temporal Video Synthesis**
-    *   *Application:* Deployed in video generators (like Sora) via factored axial attention, where distinct attention head groups alternate between checking spatial image structures and tracking temporal motion shifts across video frames.
+| Application | Details | First Used | Paper Link |
+| :--- | :--- | :--- | :--- |
+| **Autoregressive Text Generation Foundations** | *Application:* Serves as the core sequence alignment mechanism for modern LLMs, allowing models to maintain long-range tracking across multi-turn user conversations. | 2017 | [https://arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762) |
+| **Cross-Modal Vision-Language Alignment** | *Application:* Drives multi-modal systems by configuring one modality (e.g., Text) to provide the Queries, while a separate visual modality (e.g., Image tokens) serves as the Keys and Values, binding phrases to explicit pixels. | 2022 | [https://arxiv.org/abs/2204.14198](https://arxiv.org/abs/2204.14198) |
+| **Spatio-Temporal Video Synthesis** | *Application:* Deployed in video generators (like Sora) via factored axial attention, where distinct attention head groups alternate between checking spatial image structures and tracking temporal motion shifts across video frames. | 2021 | [https://arxiv.org/abs/2102.05095](https://arxiv.org/abs/2102.05095) |
