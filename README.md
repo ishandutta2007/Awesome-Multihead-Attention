@@ -1,11 +1,22 @@
-# Awesome-Multihead-Attention
-## Multi-Head Attention (MHA): Evolution, Variants, & Applications
+# 🚀 Awesome-Multihead-Attention
+<p align='center'>
+  <img src='assets/banner.svg' alt='Awesome Multihead Attention Banner' />
+</p>
+<p align='center'>
+  <a href="https://github.com/ishandutta2007/Awesome-Awesome-Awesome"><img src="https://img.shields.io/badge/Awesome-%E2%9C%94-blueviolet?style=flat-square&logo=github" alt="Awesome"/></a><a href="https://discord.gg/jc4xtF58Ve"><img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord" /></a>
+  <a href="https://github.com/ishandutta2007"><img alt="GitHub followers" src="https://img.shields.io/github/followers/ishandutta2007?label=Follow" /></a>
+</p>
+
+<p align='center'><b>A curated list of awesome multi-head attention variants, optimizations, and applications in modern AI models.</b></p>
+
+
+## 🧠 Multi-Head Attention (MHA): Evolution, Variants, & Applications
 
 Multi-Head Attention is the computational engine of the Transformer architecture. Instead of performing a single attention function over the full vector dimension, Multi-Head Attention linearly projects Queries ($Q$), Keys ($K$), and Values ($V$) into multiple lower-dimensional subspaces. Each "head" processes these subspaces in parallel, allowing the model to simultaneously attend to information from different representation spaces at different positions.
 
 ---
 
-## 1. The Chronological Evolution
+## ⏳ 1. The Chronological Evolution
 
 The architectural progression of multi-head structures has been driven entirely by the need to optimize memory footprints, lower computational complexity, and extend context windows.
 
@@ -25,7 +36,7 @@ flowchart LR
 
 ---
 
-## 2. Structural & Spatial Masking Variants
+## 🏗️ 2. Structural & Spatial Masking Variants
 
 These variants modify the attention matrix visibility rules to adapt the multi-head block to different learning objectives and structural layouts.
 
@@ -37,7 +48,7 @@ These variants modify the attention matrix visibility rules to adapt the multi-h
 
 ---
 
-## 3. Mathematical & Scale Optimization Types
+## 🧮 3. Mathematical & Scale Optimization Types
 
 These variations alter the traditional $O(N^2)$ attention calculation matrix to enable processing for ultra-long context limits.
 
@@ -49,7 +60,7 @@ These variations alter the traditional $O(N^2)$ attention calculation matrix to 
 
 ---
 
-## 4. Cross-Domain Applications
+## 🌐 4. Cross-Domain Applications
 
 | Application | Details | First Used | Paper Link |
 | :--- | :--- | :--- | :--- |
