@@ -67,3 +67,14 @@ These variations alter the traditional $O(N^2)$ attention calculation matrix to 
 | **[Autoregressive Text Generation Foundations](pages/autoregressive.md)** | *Application:* Serves as the core sequence alignment mechanism for modern LLMs, allowing models to maintain long-range tracking across multi-turn user conversations. | 2017 | [https://arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762) |
 | **[Cross-Modal Vision-Language Alignment](pages/cross-modal.md)** | *Application:* Drives multi-modal systems by configuring one modality (e.g., Text) to provide the Queries, while a separate visual modality (e.g., Image tokens) serves as the Keys and Values, binding phrases to explicit pixels. | 2022 | [https://arxiv.org/abs/2204.14198](https://arxiv.org/abs/2204.14198) |
 | **[Spatio-Temporal Video Synthesis](pages/video-synthesis.md)** | *Application:* Deployed in video generators (like Sora) via factored axial attention, where distinct attention head groups alternate between checking spatial image structures and tracking temporal motion shifts across video frames. | 2021 | [https://arxiv.org/abs/2102.05095](https://arxiv.org/abs/2102.05095) |
+
+## 🌟 Star History
+<div align="center">
+<a href="https://www.star-history.com/?repos=ishandutta2007/Awesome-Multihead-Attention&type=date&legend=bottom-right">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=ishandutta2007/Awesome-Multihead-Attention&type=date&theme=dark&legend=bottom-right" />
+<source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=ishandutta2007/Awesome-Multihead-Attention&type=date&legend=bottom-right" />
+<img alt="Star History Chart" src="https://api.star-history.com/chart?repos=ishandutta2007/Awesome-Multihead-Attention&type=date&legend=bottom-right" />
+</picture>
+</a>
+</div>
